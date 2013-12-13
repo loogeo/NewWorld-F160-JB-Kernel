@@ -2491,4 +2491,10 @@ config CPU_OVERCLOCK
 	help
 	  acpuclock8960(msm8960) overclock to 1728 MHz
 
+config GPU_OVERCLOCK
+	bool "Enable GPU Overclocking option"
+	default y
+	help
+	  Adreno2xx overclocking up to 480 MHz
+
 endif
