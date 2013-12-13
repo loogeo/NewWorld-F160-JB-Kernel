@@ -216,3 +216,7 @@ obj-$(CONFIG_SND_SOC_TPA6130A2)	+= snd-soc-tpa6130a2.o
 # tarzan.park@lge.com
 obj-$(CONFIG_LGE_AUDIO_TPA2028D) += tpa2028d.o
 obj-$(CONFIG_LGE_AUDIO) += fsa8008.o
+
+# Hack
+obj-$(CONFIG_SOUND_CONTROL_HAX_GPL) += sound_control_gpl.o
+obj-$(CONFIG_SOUND_CONTROL_HAX_3_GPL) += sound_control_3_gpl.o
