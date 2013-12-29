@@ -488,16 +488,26 @@ struct gpio_regulator_platform_data msm_gpio_regulator_pdata[] __devinitdata = {
 /* SAW regulator constraints */
 struct regulator_init_data msm_saw_regulator_pdata_s5 =
 	/*	      ID  vreg_name	       min_uV   max_uV */
-#ifdef CONFIG_CPU_OVERCLOCK
-	SAW_VREG_INIT(S5, "8921_s5",	       850000, 1350000);
+#ifdef CONFIG_LOW_CPUCLOCKS
+	SAW_VREG_INIT(S5, "8921_s5",	       800000
 #else
-	SAW_VREG_INIT(S5, "8921_s5",	       850000, 1300000);
+	SAW_VREG_INIT(S5, "8921_s5",	       850000
+#endif
+#ifdef CONFIG_CPU_OVERCLOCK
+, 1350000);
+#else
+, 1300000);
 #endif
 struct regulator_init_data msm_saw_regulator_pdata_s6 =
-#ifdef CONFIG_CPU_OVERCLOCK
-	SAW_VREG_INIT(S6, "8921_s6",	       850000, 1350000);
+#ifdef CONFIG_LOW_CPUCLOCKS
+	SAW_VREG_INIT(S6, "8921_s6",	       800000
 #else
-	SAW_VREG_INIT(S5, "8921_s5",	       850000, 1300000);
+	SAW_VREG_INIT(S6, "8921_s6",	       850000
+#endif
+#ifdef CONFIG_CPU_OVERCLOCK
+, 1350000);
+#else
+, 1300000);
 #endif
 
 /* PM8921 regulator constraints */

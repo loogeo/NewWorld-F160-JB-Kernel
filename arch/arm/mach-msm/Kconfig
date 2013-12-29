@@ -2491,4 +2491,10 @@ config CPU_OVERCLOCK
 	help
 	  msm8960 overclock up to 1890MHz
 
+config LOW_CPUCLOCKS
+	bool "Enable ultra low CPU clocks"
+	default n
+	help
+	  Ultra low cpu frequencies enabled for CPU
+
 endif
