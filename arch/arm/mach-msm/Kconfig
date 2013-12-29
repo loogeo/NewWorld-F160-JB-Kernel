@@ -2485,4 +2485,10 @@ config GPU_OVERCLOCK
 	help
 	  Adreno2xx overclocking up to 480 MHz
 
+config CPU_OVERCLOCK
+	bool "Enable CPU Overclocking option"
+	default n
+	help
+	  msm8960 overclock up to 1890MHz
+
 endif
