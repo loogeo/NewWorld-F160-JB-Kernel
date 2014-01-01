@@ -960,7 +960,7 @@ static const int krait_needs_vmin(void)
 	case 0x511F04D0: /* KR28M2A20 */
 	case 0x511F04D1: /* KR28M2A21 */
 	case 0x510F06F0: /* KR28M4A10 */
-		return 1;
+//		return 1;
 	default:
 		return 0;
 	};
@@ -968,6 +968,7 @@ static const int krait_needs_vmin(void)
 
 static void krait_apply_vmin(struct acpu_level *tbl)
 {
+	printk(KERN_INFO "[vmin]Applying vmin voltage\n" );
 	for (; tbl->speed.khz != 0; tbl++)
 		if (tbl->vdd_core < 1150000)
 			tbl->vdd_core = 1150000;

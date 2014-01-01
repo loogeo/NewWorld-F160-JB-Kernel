@@ -172,9 +172,9 @@ static struct acpu_level acpu_freq_tbl_slow[] __initdata = {
 	{ 1, {  1512000, HFPLL, 1, 0, 0x38 }, L2(18), 1250000 },
 #ifdef CONFIG_CPU_OVERCLOCK
 	{ 1, {  1674000, HFPLL, 1, 0, 0x3A }, L2(18), 1275000 },
-	{ 1, {  1728000, HFPLL, 1, 0, 0x3C }, L2(19), 1300000 },
-	{ 1, {  1809000, HFPLL, 1, 0, 0x3E }, L2(19), 1325000 },
-	{ 1, {  1890000, HFPLL, 1, 0, 0x40 }, L2(19), 1350000 },
+	{ 1, {  1728000, HFPLL, 1, 0, 0x3C }, L2(18), 1300000 },
+	{ 1, {  1809000, HFPLL, 1, 0, 0x3E }, L2(18), 1325000 },
+	{ 1, {  1890000, HFPLL, 1, 0, 0x40 }, L2(18), 1350000 },
 #endif
 	{ 0, { 0 } }
 };
@@ -211,9 +211,9 @@ static struct acpu_level acpu_freq_tbl_nom[] __initdata = {
 	{ 1, {  1512000, HFPLL, 1, 0, 0x38 }, L2(18), 1200000 },
 #ifdef CONFIG_CPU_OVERCLOCK
 	{ 1, {  1674000, HFPLL, 1, 0, 0x3A }, L2(18), 1225000 },
-	{ 1, {  1728000, HFPLL, 1, 0, 0x3C }, L2(19), 1250000 },
-	{ 1, {  1809000, HFPLL, 1, 0, 0x3E }, L2(19), 1275000 },
-	{ 1, {  1890000, HFPLL, 1, 0, 0x40 }, L2(19), 1300000 },
+	{ 1, {  1728000, HFPLL, 1, 0, 0x3C }, L2(18), 1250000 },
+	{ 1, {  1809000, HFPLL, 1, 0, 0x3E }, L2(18), 1275000 },
+	{ 1, {  1890000, HFPLL, 1, 0, 0x40 }, L2(18), 1300000 },
 #endif
 	{ 0, { 0 } }
 };
@@ -250,17 +250,17 @@ static struct acpu_level acpu_freq_tbl_fast[] __initdata = {
 	{ 1, {  1512000, HFPLL, 1, 0, 0x38 }, L2(18), 1150000 },
 #ifdef CONFIG_CPU_OVERCLOCK
 	{ 1, {  1674000, HFPLL, 1, 0, 0x3A }, L2(18), 1175000 },
-	{ 1, {  1728000, HFPLL, 1, 0, 0x3C }, L2(19), 1200000 },
-	{ 1, {  1809000, HFPLL, 1, 0, 0x3E }, L2(19), 1225000 },
-	{ 1, {  1890000, HFPLL, 1, 0, 0x40 }, L2(19), 1250000 },
+	{ 1, {  1728000, HFPLL, 1, 0, 0x3C }, L2(18), 1200000 },
+	{ 1, {  1809000, HFPLL, 1, 0, 0x3E }, L2(18), 1225000 },
+	{ 1, {  1890000, HFPLL, 1, 0, 0x40 }, L2(18), 1250000 },
 #endif
 	{ 0, { 0 } }
 };
 
 static struct pvs_table pvs_tables[NUM_PVS] __initdata = {
 [PVS_SLOW]    = { acpu_freq_tbl_slow, sizeof(acpu_freq_tbl_slow),     0 },
-[PVS_NOMINAL] = { acpu_freq_tbl_nom,  sizeof(acpu_freq_tbl_nom),  25000 },
-[PVS_FAST]    = { acpu_freq_tbl_fast, sizeof(acpu_freq_tbl_fast), 25000 },
+[PVS_NOMINAL] = { acpu_freq_tbl_nom,  sizeof(acpu_freq_tbl_nom),      0 },
+[PVS_FAST]    = { acpu_freq_tbl_fast, sizeof(acpu_freq_tbl_fast),     0 },
 };
 
 static struct acpuclk_krait_params acpuclk_8960_params __initdata = {
