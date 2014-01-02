@@ -31,6 +31,10 @@
 #include <mach/msm_xo.h>
 #include <mach/msm_hsusb.h>
 
+#ifdef CONFIG_BLX
+#include <linux/blx.h>
+#endif
+
 #ifdef CONFIG_BATTERY_MAX17043
 #include <linux/max17043_fuelgauge.h>
 #endif
@@ -2005,7 +2009,11 @@ static int get_prop_batt_status(struct pm8921_chg_chip *chip)
 #endif
 
 	if (chip->ext_psy) {
+#ifdef CONFIG_BLX
+		if (max17043_get_capacity() >= get_charginglimit())
+#else
 		if (chip->ext_charge_done)
+#endif
 			return POWER_SUPPLY_STATUS_FULL;
 		if (chip->ext_charging)
 			return POWER_SUPPLY_STATUS_CHARGING;
@@ -4237,9 +4245,9 @@ static int is_charging_finished(struct pm8921_chg_chip *chip)
 
 		vbatdet_low = pm_chg_get_rt_status(chip, VBATDET_LOW_IRQ);
 		pr_debug("vbatdet_low = %d\n", vbatdet_low);
-		if (vbatdet_low == 1)
-			return CHG_IN_PROGRESS;
-
+		if (vbatdet_low ==  1)
+		    return CHG_IN_PROGRESS;
+		
 		/* reset count if battery is hot/cold */
 		rc = pm_chg_get_rt_status(chip, BAT_TEMP_OK_IRQ);
 		pr_debug("batt_temp_ok = %d\n", rc);
@@ -4360,8 +4368,11 @@ static void eoc_worker(struct work_struct *work)
 		wake_unlock(&chip->eoc_wake_lock);
 		return;
 	}
-
+#ifdef CONFIG_BLX
+	if (end == CHG_FINISHED || max17043_get_capacity() >= get_charginglimit()) {
+#else
 	if (end == CHG_FINISHED) {
+#endif
 		count++;
 	} else {
 		count = 0;
@@ -4376,14 +4387,20 @@ static void eoc_worker(struct work_struct *work)
 		wireless_charge_done = true;
 #endif
 		pm_chg_auto_enable(chip, 0);
-
+#ifdef CONFIG_BLX
+		if (is_ext_charging(chip) || max17043_get_capacity() >= get_charginglimit())
+#else
 		if (is_ext_charging(chip))
+#endif
 			chip->ext_charge_done = true;
+//#ifdef CONFIG_BLX
 
+//#else
 		if (chip->is_bat_warm || chip->is_bat_cool)
 			chip->bms_notify.is_battery_full = 0;
 		else
 			chip->bms_notify.is_battery_full = 1;
+//#endif
 		/* declare end of charging by invoking chgdone interrupt */
 		chgdone_irq_handler(chip->pmic_chg_irq[CHGDONE_IRQ], chip);
 		wake_unlock(&chip->eoc_wake_lock);

@@ -74,3 +74,4 @@ obj-$(CONFIG_QSEECOM) += qseecom.o
 obj-$(CONFIG_QFP_FUSE) += qfp_fuse.o
 obj-$(CONFIG_ANDROID_VIBRATOR) += android_vibrator.o
 obj-$(CONFIG_BU52031NVX) += pm8xxx-cradle.o
+obj-$(CONFIG_BLX) += blx.o
