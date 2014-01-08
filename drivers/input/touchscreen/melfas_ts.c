@@ -33,6 +33,10 @@
 #include "ts_class.h"
 #endif
 
+#ifdef CONFIG_TOUCHSCREEN_DOUBLETAP2WAKE
+#include <linux/input/doubletap2wake.h>
+#endif
+
 #define MODE_CONTROL                    	0x01
 #define TS_READ_START_ADDR              	0x10
 
@@ -474,13 +478,29 @@ mms136_fw_read_show(struct device *dev, struct device_attribute *attr, char *buf
 	ts->version = verbuf[FW_VERSION_ADDR];
 
 	if (ts -> version != ts->pdata->fw_ver) {
+#ifdef CONFIG_TOUCHSCREEN_DOUBLETAP2WAKE
+		if (dt2w_switch == 1) {
+			ts->pdata->power_enable(1, true);
+		} else {
+			ts->pdata->power_enable(0, true);
+		}
+#else
 		ts->pdata->power_enable(0, true);
+#endif
 		mdelay(50);
 
 		free_irq(ts->client->irq, ts);
 
 		mms100_download(isp_sys_type, embedded_img);
+#ifdef CONFIG_TOUCHSCREEN_DOUBLETAP2WAKE
+		if (dt2w_switch == 1) {
+			ts->pdata->power_enable(1, true);
+		} else {
+			ts->pdata->power_enable(0, true);
+		}
+#else
 		ts->pdata->power_enable(0, true);
+#endif
 		ts->pdata->power_enable(1, true);
 
 		msleep(50);
@@ -579,7 +599,15 @@ mms136_fw_upgrade_store(struct device *dev, struct device_attribute *attr, const
 			i++;
 		} while (!gpio_get_value(ts->pdata->i2c_int_gpio));
 		mms100_download(isc_type, embedded_img);
+#ifdef CONFIG_TOUCHSCREEN_DOUBLETAP2WAKE
+		if (dt2w_switch == 1) {
+			ts->pdata->power_enable(1, true);
+		} else {
+			ts->pdata->power_enable(0, true);
+		}
+#else
 		ts->pdata->power_enable(0, true);
+#endif
 		ts->pdata->power_enable(1, true);
 
 		verbuf[0] = TS_READ_VERSION_ADDR;
@@ -626,7 +654,15 @@ mms136_fw_upgrade_store(struct device *dev, struct device_attribute *attr, const
 			i++;
 		} while (!gpio_get_value(ts->pdata->i2c_int_gpio));
 		mms100_download(isc_type, external_img);
+#ifdef CONFIG_TOUCHSCREEN_DOUBLETAP2WAKE
+		if (dt2w_switch == 1) {
+			ts->pdata->power_enable(1, true);
+		} else {
+			ts->pdata->power_enable(0, true);
+		}
+#else
 		ts->pdata->power_enable(0, true);
+#endif
 		ts->pdata->power_enable(1, true);
 
 		verbuf[0] = TS_READ_VERSION_ADDR;
@@ -664,10 +700,26 @@ mms136_power_control_store(struct device *dev, struct device_attribute *attr, co
 		ts->pdata->power_enable(1, true);
 		break;
 	case 2: /*touch power off */
+#ifdef CONFIG_TOUCHSCREEN_DOUBLETAP2WAKE
+		if (dt2w_switch == 1) {
+			ts->pdata->power_enable(1, true);
+		} else {
+			ts->pdata->power_enable(0, true);
+		}
+#else
 		ts->pdata->power_enable(0, true);
+#endif
 		break;
 	case 3:
+#ifdef CONFIG_TOUCHSCREEN_DOUBLETAP2WAKE
+		if (dt2w_switch == 1) {
+			ts->pdata->power_enable(1, true);
+		} else {
+			ts->pdata->power_enable(0, true);
+		}
+#else
 		ts->pdata->power_enable(0, true);
+#endif
 		ts->pdata->power_enable(1, true);
 		break;
 	default:
@@ -1563,7 +1615,15 @@ static void melfas_ts_sw_reset(struct melfas_ts_data *ts)
 
 	release_all_fingers(ts);
 	release_all_keys(ts);
+#ifdef CONFIG_TOUCHSCREEN_DOUBLETAP2WAKE
+	if (dt2w_switch == 1) {
+		ts->pdata->power_enable(1, true);
+	} else {
+		ts->pdata->power_enable(0, true);
+	}
+#else
 	ts->pdata->power_enable(0, true);
+#endif
 	ts->pdata->power_enable(1, true);
 	msleep(20);
 
@@ -1581,8 +1641,15 @@ static void melfas_ts_suspend_func(struct melfas_ts_data *ts)
 	int ret;
 
 	printk(KERN_INFO "[TOUCH] suspend start \n");
-
+#ifdef CONFIG_TOUCHSCREEN_DOUBLETAP2WAKE
+	if (dt2w_switch == 1) {
+		ret = ts->pdata->power_enable(1, true);
+	} else {
+		ret = ts->pdata->power_enable(0, true);
+	}
+#else
 	ret = ts->pdata->power_enable(0, true);
+#endif
 	if (ret < 0)
 		printk(KERN_ERR "[TOUCH] suspend: i2c_smbus_write_byte_data failed\n");
 
