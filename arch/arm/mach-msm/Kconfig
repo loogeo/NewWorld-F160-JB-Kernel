@@ -2489,7 +2489,7 @@ config CPU_OVERCLOCK
 	bool "Enable CPU Overclocking option"
 	default n
 	help
-	  msm8960 overclock up to 1890MHz
+	  Krait overclocking up to 1.84 GHz
 
 config LOW_CPUCLOCKS
 	bool "Enable ultra low CPU clocks"
