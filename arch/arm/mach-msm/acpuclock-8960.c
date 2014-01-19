@@ -174,6 +174,9 @@ static struct acpu_level acpu_freq_tbl_slow[] __initdata = {
 	{ 1, {  1620000, HFPLL, 1, 0, 0x3A }, L2(18), 1275000 },
 	{ 1, {  1728000, HFPLL, 1, 0, 0x3C }, L2(18), 1300000 },
 	{ 1, {  1836000, HFPLL, 1, 0, 0x3E }, L2(18), 1325000 },
+#ifdef CONFIG_OC_ULTIMATE
+	{ 1, {  1944000, HFPLL, 1, 0, 0x40 }, L2(18), 1350000 },
+#endif
 #endif
 	{ 0, { 0 } }
 };
@@ -212,6 +215,9 @@ static struct acpu_level acpu_freq_tbl_nom[] __initdata = {
 	{ 1, {  1620000, HFPLL, 1, 0, 0x3A }, L2(18), 1225000 },
 	{ 1, {  1728000, HFPLL, 1, 0, 0x3C }, L2(18), 1250000 },
 	{ 1, {  1836000, HFPLL, 1, 0, 0x3E }, L2(18), 1275000 },
+#ifdef CONFIG_OC_ULTIMATE
+	{ 1, {  1944000, HFPLL, 1, 0, 0x40 }, L2(18), 1300000 },
+#endif
 #endif
 	{ 0, { 0 } }
 };
@@ -250,6 +256,9 @@ static struct acpu_level acpu_freq_tbl_fast[] __initdata = {
 	{ 1, {  1620000, HFPLL, 1, 0, 0x3A }, L2(18), 1175000 },
 	{ 1, {  1728000, HFPLL, 1, 0, 0x3C }, L2(18), 1200000 },
 	{ 1, {  1836000, HFPLL, 1, 0, 0x3E }, L2(18), 1225000 },
+#ifdef CONFIG_OC_ULTIMATE
+	{ 1, {  1944000, HFPLL, 1, 0, 0x40 }, L2(18), 1250000 },
+#endif
 #endif
 	{ 0, { 0 } }
 };

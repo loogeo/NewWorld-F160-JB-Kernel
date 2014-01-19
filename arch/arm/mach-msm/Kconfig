@@ -2491,6 +2491,13 @@ config CPU_OVERCLOCK
 	help
 	  Krait overclocking up to 1.84 GHz
 
+config OC_ULTIMATE
+	bool "allow 1.944 GHz max OC option"
+	depends on CPU_OVERCLOCK
+	default n
+	help
+	  Unlock the ultimate Overclock freq speed @ 1.944 GHz
+
 config LOW_CPUCLOCKS
 	bool "Enable ultra low CPU clocks"
 	default n
